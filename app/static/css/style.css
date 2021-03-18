@@ -1,0 +1,4 @@
+textarea[name=input_thought] {
+    resize: vertical;
+    width: 100%;
+}
