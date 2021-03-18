@@ -43,19 +43,35 @@
                 <h1>Encryptor</h1>
                 <div id="app">
                     <form>
-                        <div class="input-group fluid">
-                            <label for="input_thought">Original thought</label>
-                            <textarea v-model="thought_text" name="input_thought" id="input_thought"></textarea>
+                        <div class="col-sm-12">
+                            <div class="input-group fluid">
+                                <label for="input_thought">Original thought</label>
+                                <textarea v-model="thought_text" name="input_thought" id="input_thought"></textarea>
+                            </div>
                         </div>
-                        <div class="input-group">
-                            <input type="button" value="Compute" />
-                            <input type="text" id="Username" placeholder="Hash" v-bind:value="hash_result"/>
-                            <input type="button" value="Copy" />
+                        <div class="col-sm-12">
+                            <label for="hash_input">Hash: </label>
+                            <input type="text" id="hash_input" v-bind:value="hash_result" disabled/>
                         </div>
-                        <div class="input-group">
-                            <label for="">Variants</label>
+                        <div class="col-sm-12">
+                            <label for="variant_output">Variant: </label>
+                            <input type="text" id="variant_output" v-bind:value="emoji_result" disabled/>
                         </div>
                     </form>
+                    <div class="row">
+                        <div class="col-sm-12 col-md-3">
+                            <div class="card fluid">d</div>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <div class="card fluid">d</div>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <div class="card fluid">d</div>
+                        </div>
+                        <div class="col-sm-12 col-md-3">
+                            <div class="card fluid">d</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
