@@ -1,4 +1,4 @@
-var sha256 = function sha256(ascii) {
+let sha256 = function sha256(ascii) {
 	function rightRotate(value, amount) {
 		return (value>>>amount) | (value<<(32 - amount));
 	};
@@ -95,7 +95,11 @@ var sha256 = function sha256(ascii) {
 	return result;
 };
 
-var app = new Vue({
+let compute_emoji_string = function (ascii) {
+	return 'I \u2764\uFE0F emoji!';
+}
+
+let app = new Vue({
     el: '#app',
     delimiters: ['{(', ')}'],
     data: {
@@ -103,8 +107,35 @@ var app = new Vue({
     },
     computed: {
         hash_result: function () {
-            // `this` указывает на экземпляр vm
-            return sha256(this.thought_text).slice(0,8)
-        }
+            return sha256(this.thought_text).slice(0,8);
+        },
+		unicode_result: function () {
+			return compute_emoji_string(this.hash_result)
+		},
+		emoji_result: function () {
+        	return twemoji.parse(this.unicode_result);
+		}
     },
 })
+
+// Toastr.js
+toastr.options.preventDuplicates = true;
+toastr.options.timeOut = 1000;
+
+// Clipboard.js
+let clipboard = new ClipboardJS('.btn');
+
+clipboard.on('success', function(e) {
+    console.info('Action:', e.action);
+    console.info('Text:', e.text);
+    console.info('Trigger:', e.trigger);
+
+    e.clearSelection();
+    toastr.info('Are you the 6 fingered man?')
+});
+
+clipboard.on('error', function(e) {
+    console.error('Action:', e.action);
+    console.error('Trigger:', e.trigger);
+    toastr.info('Error')
+});
