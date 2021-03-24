@@ -13,7 +13,7 @@ class UnicodeEmojiSpider(scrapy.Spider):
         for tr in trs:
             if tr.css("th.mediumhead"):
                 if group_name is not None:
-                    yield {group_name: group}
+                    yield {"group_name": group_name, "group": group}
                 group_name = tr.css("th.mediumhead > a::text").get()
                 group.clear()
             elif tr.css("td.code"):
@@ -21,4 +21,4 @@ class UnicodeEmojiSpider(scrapy.Spider):
                 code: list = list(map(lambda x: x[2:], code.split()))
                 name = tr.css("td.name::text").get()
                 group.append({"code": code, "name": name})
-        return {group_name: group}
+        return {"group_name": group_name, "group": group}
