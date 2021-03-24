@@ -95,8 +95,49 @@ let sha256 = function sha256(ascii) {
 	return result;
 };
 
+let codes_data
+
+function httpRequest(address, reqType, asyncProc) {
+  var req = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
+  if (asyncProc) {
+    req.onreadystatechange = function() {
+      if (this.readyState == 4) {
+        asyncProc(this);
+      }
+    };
+  } else {
+    // req.timeout = 4000;  // Reduce default 2mn-like timeout to 4 s if synchronous
+  }
+  req.open(reqType, address, !(!asyncProc));
+  req.send();
+  return req;
+}
+
+codes_data = JSON.parse(httpRequest("/codes.json", "GET").responseText) // TODO .too terrible
+
+function convert(codes) {
+	let dict = {}
+	for(let i = 0; i < codes.length; i++) {
+    	let group = codes[i]["group"]
+		for(let j = 0; j < group.length; j++) {
+			let code = group[j]["code"]
+			if(code.length <= 1){
+				let liter  = code[0].substring(code[0].length - 1).toLowerCase()
+				dict[liter] = code[0]
+			}
+		}
+	}
+	return dict
+}
+
+let codes_dict = convert(codes_data)
+
 let compute_emoji_string = function (ascii) {
-	return 'I \u2764\uFE0F emoji!';
+	let result = ""
+	for(let i = 0; i < ascii.length; i++) {
+		result += String.fromCodePoint(parseInt(codes_dict[ascii[i]], 16))
+	}
+	return result
 }
 
 let app = new Vue({
