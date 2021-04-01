@@ -113,23 +113,32 @@ function httpRequest(address, reqType, asyncProc) {
 
 function convert(codes) {
 	let dict = {}
+	let str = "1234567890abcdef"
+	for(let i = 0; i < str.length; i++){
+		dict[str[i]] = []
+	}
 	for(let i = 0; i < codes.length; i++) {
     	let group = codes[i]["group"]
 		for(let j = 0; j < group.length; j++) {
 			let code = group[j]["code"]
 			if(code.length <= 1){
 				let liter  = code[0].substring(code[0].length - 1).toLowerCase()
-				dict[liter] = code[0]
+				dict[liter].push(code[0])
 			}
 		}
 	}
 	return dict
 }
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * max);
+}
+
 let compute_emoji_string = function (ascii) {
 	let result = ""
 	for(let i = 0; i < ascii.length; i++) {
-		result += String.fromCodePoint(parseInt(codes_dict[ascii[i]], 16))
+		let variants = codes_dict[ascii[i]]
+		result += String.fromCodePoint(parseInt(variants[getRandomInt(variants.length)], 16))
 	}
 	return result
 }
