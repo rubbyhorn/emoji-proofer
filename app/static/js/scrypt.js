@@ -95,8 +95,6 @@ let sha256 = function sha256(ascii) {
 	return result;
 };
 
-let codes_data
-
 function httpRequest(address, reqType, asyncProc) {
   var req = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP");
   if (asyncProc) {
@@ -113,8 +111,6 @@ function httpRequest(address, reqType, asyncProc) {
   return req;
 }
 
-codes_data = JSON.parse(httpRequest("/codes.json", "GET").responseText) // TODO .too terrible
-
 function convert(codes) {
 	let dict = {}
 	for(let i = 0; i < codes.length; i++) {
@@ -130,7 +126,7 @@ function convert(codes) {
 	return dict
 }
 
-let codes_dict = convert(codes_data)
+let codes_dict = convert(JSON.parse(httpRequest("/codes.json", "GET").responseText))
 
 let compute_emoji_string = function (ascii) {
 	let result = ""
