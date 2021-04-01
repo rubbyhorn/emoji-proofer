@@ -126,8 +126,6 @@ function convert(codes) {
 	return dict
 }
 
-let codes_dict = convert(JSON.parse(httpRequest("/codes.json", "GET").responseText))
-
 let compute_emoji_string = function (ascii) {
 	let result = ""
 	for(let i = 0; i < ascii.length; i++) {
@@ -135,6 +133,12 @@ let compute_emoji_string = function (ascii) {
 	}
 	return result
 }
+
+function utoa(data) {
+  return btoa(unescape(encodeURIComponent(data)));
+}
+
+let codes_dict = convert(JSON.parse(httpRequest("/codes.json", "GET").responseText))
 
 let app = new Vue({
     el: '#app',
@@ -144,7 +148,7 @@ let app = new Vue({
     },
     computed: {
         hash_result: function () {
-            return sha256(this.thought_text).slice(0,8);
+            return sha256(utoa(this.thought_text)).slice(0,8);
         },
 		unicode_result: function () {
 			return compute_emoji_string(this.hash_result)
