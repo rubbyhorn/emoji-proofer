@@ -7,3 +7,8 @@ git clone https://github.com/rubbyhorn/emoji-proofer.git
 cd emoji-proofer
 docker build -t emoji-proofer . && docker run -it --rm -p 1234:1234 emoji-proofer
 ```
+
+## ... or test it online
+```url
+https://rubbyhorn.github.io/emoji-proofer/
+```
