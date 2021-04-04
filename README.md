@@ -9,6 +9,4 @@ docker build -t emoji-proofer . && docker run -it --rm -p 1234:1234 emoji-proofe
 ```
 
 ## ... or test it online
-```url
 https://rubbyhorn.github.io/emoji-proofer/
-```
